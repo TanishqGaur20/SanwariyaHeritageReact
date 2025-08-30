@@ -1,18 +1,11 @@
 "use client";
-import  { useEffect, useRef } from "react";
+import  { useEffect} from "react";
 import AOS from "aos";
 
 import btn from "../../public/buttonroom.svg";
 import star8 from "../../public/Star 8.svg";
 
 const Rooms = () => {
-  const popupRef = useRef<HTMLDivElement>(null);
-
-
-
-  
-
-  
 
   useEffect(() => {
     AOS.init({

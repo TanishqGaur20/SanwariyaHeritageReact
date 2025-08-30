@@ -1,7 +1,4 @@
 import "aos/dist/aos.css";
-import{ useRef } from "react";
-
-
 const BookARoom = () => {
 
 
