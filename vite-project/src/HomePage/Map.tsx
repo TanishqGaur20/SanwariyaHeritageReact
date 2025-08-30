@@ -1,8 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  Navigation,
-  Share2,
-} from "lucide-react";
+import { Navigation, Share2 } from "lucide-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine";
@@ -25,11 +22,11 @@ export default function Map(): React.JSX.Element {
   const [userLocation, setUserLocation] = useState<Location | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   const mapRefs = useRef<MapRefs>({
     map: null,
     mapContainer: null,
-    routingControl: null
+    routingControl: null,
   });
 
   useEffect(() => {
@@ -45,6 +42,7 @@ export default function Map(): React.JSX.Element {
         },
         (err: GeolocationPositionError) => {
           setError("Please enable location services to get directions");
+          console.log(err.message);
           setLoading(false);
         }
       );
@@ -87,18 +85,18 @@ export default function Map(): React.JSX.Element {
       );
 
       // Custom venue icon
-      const venueIcon = L.divIcon({
-        html: `<div class="venue-marker">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#e11d48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="w-8 h-8">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                  <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                <div class="pulse"></div>
-              </div>`,
-        className: "",
-        iconSize: [40, 40],
-        iconAnchor: [20, 40],
-      });
+      // const venueIcon = L.divIcon({
+      //   html: `<div class="venue-marker">
+      //           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#e11d48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="w-8 h-8">
+      //             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+      //             <circle cx="12" cy="10" r="3"></circle>
+      //           </svg>
+      //           <div class="pulse"></div>
+      //         </div>`,
+      //   className: "",
+      //   iconSize: [40, 40],
+      //   iconAnchor: [20, 40],
+      // });
 
       // Add venue marker
       // const venueMarker = L.marker([VENUE_LOCATION.lat, VENUE_LOCATION.lng], {
@@ -147,9 +145,9 @@ export default function Map(): React.JSX.Element {
           addWaypoints: false, // Prevent adding waypoints
           draggableWaypoints: false, // Prevent dragging waypoints
         }).addTo(mapRefs.current.map);
-        
+
         mapRefs.current.routingControl = routingControl; // Store the routing control
-        
+
         // Hide the routing container initially on mobile
         const isMobile = window.innerWidth < 768;
         if (isMobile) {
@@ -159,26 +157,37 @@ export default function Map(): React.JSX.Element {
           // Add a button to toggle directions
           const toggleBtn = L.Control.extend({
             onAdd: () => {
-              const div = L.DomUtil.create("div", "leaflet-bar leaflet-control");
+              const div = L.DomUtil.create(
+                "div",
+                "leaflet-bar leaflet-control"
+              );
               div.innerHTML =
                 '<a href="#" title="Toggle Directions" style="font-weight: bold; font-size: 16px;">📍</a>';
               div.onclick = () => {
                 if (
-                  L.DomUtil.hasClass(container, "leaflet-routing-container-hide")
+                  L.DomUtil.hasClass(
+                    container,
+                    "leaflet-routing-container-hide"
+                  )
                 ) {
                   L.DomUtil.removeClass(
                     container,
                     "leaflet-routing-container-hide"
                   );
                 } else {
-                  L.DomUtil.addClass(container, "leaflet-routing-container-hide");
+                  L.DomUtil.addClass(
+                    container,
+                    "leaflet-routing-container-hide"
+                  );
                 }
                 return false;
               };
               return div;
-            }
+            },
           });
-          new toggleBtn({ position: "bottomright" }).addTo(mapRefs.current.map!);
+          new toggleBtn({ position: "bottomright" }).addTo(
+            mapRefs.current.map!
+          );
         }
       } catch (error) {
         console.error("Routing error:", error);
@@ -243,9 +252,11 @@ export default function Map(): React.JSX.Element {
                 </div>
               </div>
             )}
-            <div 
-              ref={(el) => { mapRefs.current.mapContainer = el; }} 
-              className="h-full w-full" 
+            <div
+              ref={(el) => {
+                mapRefs.current.mapContainer = el;
+              }}
+              className="h-full w-full"
             />
           </div>
 
@@ -287,8 +298,9 @@ export default function Map(): React.JSX.Element {
       </div>
 
       {/* Styles */}
-      <style dangerouslySetInnerHTML={{
-        __html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         /* Better touch handling */
         * {
           touch-action: manipulation;
@@ -491,8 +503,9 @@ export default function Map(): React.JSX.Element {
             min-height: -webkit-fill-available;
           }
         }
-        `
-      }} />
+        `,
+        }}
+      />
     </main>
   );
 }
