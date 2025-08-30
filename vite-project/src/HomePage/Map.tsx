@@ -7,31 +7,43 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine";
 
+// Type definitions
+interface Location {
+  lat: number;
+  lng: number;
+}
 
+interface MapRefs {
+  map: L.Map | null;
+  mapContainer: HTMLDivElement | null;
+  routingControl: any; // Using any for leaflet-routing-machine
+}
 
+const VENUE_LOCATION: Location = { lat: 24.900242, lng: 74.299539 };
 
-const VENUE_LOCATION = { lat: 24.900242, lng: 74.299539 };
-
-export default function Map() {
-  const [userLocation, setUserLocation] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const mapRef = useRef(null);
-  const mapContainerRef = useRef(null);
-  const routingControlRef = useRef(null); // Add ref for routing control
+export default function Map(): React.JSX.Element {
+  const [userLocation, setUserLocation] = useState<Location | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  
+  const mapRefs = useRef<MapRefs>({
+    map: null,
+    mapContainer: null,
+    routingControl: null
+  });
 
   useEffect(() => {
     // Get user's location
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        (position: GeolocationPosition) => {
           setUserLocation({
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           });
           setLoading(false);
         },
-        (err) => {
+        (err: GeolocationPositionError) => {
           setError("Please enable location services to get directions");
           setLoading(false);
         }
@@ -43,11 +55,11 @@ export default function Map() {
   }, []);
 
   useEffect(() => {
-    if (!mapContainerRef.current) return;
+    if (!mapRefs.current.mapContainer) return;
 
     // Initialize map
-    if (!mapRef.current) {
-      mapRef.current = L.map(mapContainerRef.current, {
+    if (!mapRefs.current.map) {
+      mapRefs.current.map = L.map(mapRefs.current.mapContainer, {
         zoomControl: false, // Move zoom control to better position for mobile
         attributionControl: false, // Hide attribution for cleaner mobile view
       }).setView([VENUE_LOCATION.lat, VENUE_LOCATION.lng], 13);
@@ -57,7 +69,7 @@ export default function Map() {
         .zoom({
           position: "topright",
         })
-        .addTo(mapRef.current);
+        .addTo(mapRefs.current.map);
 
       // Add attribution in a better position
       L.control
@@ -68,10 +80,10 @@ export default function Map() {
         .addAttribution(
           '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         )
-        .addTo(mapRef.current);
+        .addTo(mapRefs.current.map);
 
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
-        mapRef.current
+        mapRefs.current.map
       );
 
       // Custom venue icon
@@ -91,11 +103,11 @@ export default function Map() {
       // Add venue marker
       // const venueMarker = L.marker([VENUE_LOCATION.lat, VENUE_LOCATION.lng], {
       //   icon: venueIcon,
-      // }).addTo(mapRef.current);
+      // }).addTo(mapRefs.current.map);
     }
 
     // Add user location and routing if available
-    if (userLocation && mapRef.current) {
+    if (userLocation && mapRefs.current.map) {
       const userIcon = L.divIcon({
         html: `<div class="user-marker">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="w-6 h-6">
@@ -110,12 +122,12 @@ export default function Map() {
 
       L.marker([userLocation.lat, userLocation.lng], {
         icon: userIcon,
-      }).addTo(mapRef.current);
+      }).addTo(mapRefs.current.map);
 
       // Add routing
       try {
-        // @ts-ignore
-        const routingControl = L.Routing.control({
+        // Type assertion for leaflet-routing-machine
+        const routingControl = (L as any).Routing.control({
           waypoints: [
             L.latLng(userLocation.lat, userLocation.lng),
             L.latLng(VENUE_LOCATION.lat, VENUE_LOCATION.lng),
@@ -125,7 +137,7 @@ export default function Map() {
           lineOptions: {
             styles: [{ color: "#e11d48", opacity: 0.7, weight: 5 }],
           },
-          router: L.Routing.osrmv1({
+          router: (L as any).Routing.osrmv1({
             serviceUrl: "https://router.project-osrm.org/route/v1",
           }),
           collapsible: true, // Allow collapsing on mobile
@@ -134,8 +146,10 @@ export default function Map() {
           createMarker: () => null, // Don't create additional markers
           addWaypoints: false, // Prevent adding waypoints
           draggableWaypoints: false, // Prevent dragging waypoints
-        }).addTo(mapRef.current);
-        routingControlRef.current = routingControl; // Store the routing control
+        }).addTo(mapRefs.current.map);
+        
+        mapRefs.current.routingControl = routingControl; // Store the routing control
+        
         // Hide the routing container initially on mobile
         const isMobile = window.innerWidth < 768;
         if (isMobile) {
@@ -143,27 +157,28 @@ export default function Map() {
           L.DomUtil.addClass(container, "leaflet-routing-container-hide");
 
           // Add a button to toggle directions
-          const toggleBtn = L.control({ position: "bottomright" });
-          toggleBtn.onAdd = () => {
-            const div = L.DomUtil.create("div", "leaflet-bar leaflet-control");
-            div.innerHTML =
-              '<a href="#" title="Toggle Directions" style="font-weight: bold; font-size: 16px;">📍</a>';
-            div.onclick = () => {
-              if (
-                L.DomUtil.hasClass(container, "leaflet-routing-container-hide")
-              ) {
-                L.DomUtil.removeClass(
-                  container,
-                  "leaflet-routing-container-hide"
-                );
-              } else {
-                L.DomUtil.addClass(container, "leaflet-routing-container-hide");
-              }
-              return false;
-            };
-            return div;
-          };
-          toggleBtn.addTo(mapRef.current);
+          const toggleBtn = L.Control.extend({
+            onAdd: () => {
+              const div = L.DomUtil.create("div", "leaflet-bar leaflet-control");
+              div.innerHTML =
+                '<a href="#" title="Toggle Directions" style="font-weight: bold; font-size: 16px;">📍</a>';
+              div.onclick = () => {
+                if (
+                  L.DomUtil.hasClass(container, "leaflet-routing-container-hide")
+                ) {
+                  L.DomUtil.removeClass(
+                    container,
+                    "leaflet-routing-container-hide"
+                  );
+                } else {
+                  L.DomUtil.addClass(container, "leaflet-routing-container-hide");
+                }
+                return false;
+              };
+              return div;
+            }
+          });
+          new toggleBtn({ position: "bottomright" }).addTo(mapRefs.current.map!);
         }
       } catch (error) {
         console.error("Routing error:", error);
@@ -171,28 +186,28 @@ export default function Map() {
     }
 
     return () => {
-      if (mapRef.current) {
-        mapRef.current.remove();
-        mapRef.current = null;
+      if (mapRefs.current.map) {
+        mapRefs.current.map.remove();
+        mapRefs.current.map = null;
       }
     };
   }, [userLocation]); // Removed routingVisible from the dependency array
 
-  const openGoogleMaps = () => {
+  const openGoogleMaps = (): void => {
     window.open(
       `https://www.google.com/maps/dir/?api=1&destination=${VENUE_LOCATION.lat},${VENUE_LOCATION.lng}`,
       "_blank"
     );
   };
 
-  const openAppleMaps = () => {
+  const openAppleMaps = (): void => {
     window.open(
       `https://maps.apple.com/?daddr=${VENUE_LOCATION.lat},${VENUE_LOCATION.lng}`,
       "_blank"
     );
   };
 
-  const shareLocation = async () => {
+  const shareLocation = async (): Promise<void> => {
     if (navigator.share) {
       try {
         await navigator.share({
@@ -211,18 +226,11 @@ export default function Map() {
     }
   };
 
-
-
   return (
     <main className="min-h-screen bg-[#1B3B36] overflow-x-hidden">
-
-
-
       {/* Map Section */}
       <div className="max-w-4xl mx-auto px-4 py-6 sm:py-8">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-
-
           {/* Responsive map height */}
           <div className="relative h-[300px] sm:h-[350px] md:h-[400px] w-full">
             {loading && (
@@ -235,7 +243,10 @@ export default function Map() {
                 </div>
               </div>
             )}
-            <div ref={mapContainerRef} className="h-full w-full" />
+            <div 
+              ref={(el) => { mapRefs.current.mapContainer = el; }} 
+              className="h-full w-full" 
+            />
           </div>
 
           {/* Navigation Options - Better touch targets */}
@@ -275,20 +286,14 @@ export default function Map() {
         </div>
       </div>
 
-
-
-
-
       {/* Styles */}
-      <style jsx global>{`
+      <style dangerouslySetInnerHTML={{
+        __html: `
         /* Better touch handling */
         * {
           touch-action: manipulation;
         }
 
- 
- 
- 
         /* Venue marker with improved animation */
         .venue-marker {
           position: relative;
@@ -486,7 +491,8 @@ export default function Map() {
             min-height: -webkit-fill-available;
           }
         }
-      `}</style>
+        `
+      }} />
     </main>
   );
 }

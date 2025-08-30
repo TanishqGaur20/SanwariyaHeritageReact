@@ -7,6 +7,7 @@ import Gallery from "./Gallery";
 import Footer from "./Footer";
 import Map from "./Map";
 
+
 export default function Home() {
   return (
     <main>
