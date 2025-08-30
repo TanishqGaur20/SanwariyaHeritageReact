@@ -13,10 +13,9 @@ import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 
  const navItems: NavItem[] = [
   { name: "Home", link: "/" },
-  { name: "About", link: "/#about" },
   { name: "Rooms", link: "/Rooms" },
   { name: "Restaurant", link: "/Restaurant" },
-  { name: "Conference hall", link: "/#conference-hall" },
+  // { name: "Conference hall", link: "/#conference-hall" },
   { name: "Contacts", link: "/#contacts" },
 ];
 
@@ -46,20 +45,15 @@ const Navbar: React.FC = () => {
     <nav
       className={`${
         scroll ? "is-sticky" : ""
-      } bg-primary flex px-5 md:px-[1.9rem] largesceen:px-14 fourk:px-44 py-5 justify-between items-center mb-0`}
+      } bg-primary flex px-5 py-2 md:px-[1.9rem]  largesceen:px-14 fourk:px-44  justify-between items-center mb-0`}
     >
-      <div>
+      <div className=' flex justify-center items-centerr'>
         <Link
           to="/"
-          className="ml-4 text-white-100 capitalize lg:text-base desktop:text-xl leading-none font-medium z-[999] relative logo"
-          style={{
-            fontFamily:
-              "Miracle Personal use, Helvetica Neue, Arial, sans-serif",
-            letterSpacing: "0.05em",
-          }}
+          className="ml-4 text-white-100  capitalize lg:text-base desktop:text-xl leading-none font-medium z-[999] relative logo"
         >
-          <span className="text-secondary">Sanwariya</span> Heritage{" "}
-          <span className="text-secondary"></span>Resort
+          <img className="h-16 w-16 bg-white rounded-full flex justify-center items-center" src="/logo.png" alt="" />
+      
         </Link>
       </div>
 
@@ -117,10 +111,7 @@ const Navbar: React.FC = () => {
                     </li>
                   </ul>
                 ))}
-                {/* <p className="text-center text-white-100 text-base xs:text-xl uppercase pt-8">+38 032 297 50 20</p>
-                <p className="text-center text-white-100 text-base xs:text-xl uppercase pt-4">8 Lystopadovoho Chynu, Lviv</p> */}
-
-                <div className="flex gap-4 justify-center pt-5">
+                   <div className="flex gap-4 justify-center pt-5">
                   <a href="/" className="text-secondary uppercase text-xs">
                     <FaFacebook size={20} />
                   </a>

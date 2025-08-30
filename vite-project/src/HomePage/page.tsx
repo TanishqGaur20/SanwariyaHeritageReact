@@ -5,6 +5,8 @@ import Rooms from "./Rooms";
 import Facilities from "./Facilities";
 import Gallery from "./Gallery";
 import Footer from "./Footer";
+import Map from "./Map";
+
 export default function Home() {
   return (
     <main>
@@ -14,6 +16,7 @@ export default function Home() {
       <Rooms />
       <Facilities />
       <Gallery />
+      <Map/>
       <Footer />
     </main>
   );

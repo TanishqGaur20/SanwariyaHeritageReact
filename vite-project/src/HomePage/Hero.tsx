@@ -86,11 +86,11 @@ const Hero = () => {
         <div className="md:col-span-2 animate__animated animate__fadeInLeft">
           <h1
             className="text-white-100 text-[3rem] small:text-[3.5rem] lg:text-[6rem] desktop:text-[7rem] heading leading-none mb-6 md:mb-8 lg:mb-14 max-md:text-center font-light"
-            style={{
-              fontFamily:
-                "Miracle Personal use, Helvetica Neue, Arial, sans-serif",
-              letterSpacing: "0.05em",
-            }}
+            // style={{
+            //   fontFamily:
+            //     "Miracle Personal use, Helvetica Neue, Arial, sans-serif",
+            //   letterSpacing: "0.05em",
+            // }}
           >
             <span className="text-secondary  inline-flex mb-4">Sanwariya </span>{" "}
             Resort <span className="text-secondary inline-flex"> and </span>
@@ -120,7 +120,7 @@ const Hero = () => {
 
           <p className="max-md:text-center max-md:mx-auto w-[85%] md:w-[13.625rem] lg:w-[90%] xl:w-[21.875rem] text-white-100 text-sm lg:text-base largesceen:text-xl leading-[155.556%] max-md:block max-md:mt-6 max-md:leading-[164.286%]">
             The luxurious Resort near the most beautiful and historic city
-            Chittorgarh with an exclusive restaurant, conference-hall and pool.
+kapasan,            Chittorgarh with an exclusive restaurant, conference-hall and pool.
           </p>
         </div>
       </div>

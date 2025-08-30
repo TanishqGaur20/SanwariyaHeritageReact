@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { cn } from "../utils/cn";
-
+import '../App.css'
 interface InfiniteMovingCardsProps {
   items: {
     quote?: string;

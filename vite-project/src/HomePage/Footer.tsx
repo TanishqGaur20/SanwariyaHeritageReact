@@ -23,13 +23,7 @@ const Footer = () => {
       id="contacts"
       className="pb-2 sm:pb-6 pt-12 md:pt-16 lg:pt-12 w-full h-full  px-5 md:px-[1.9rem] largesceen:px-14 fourk:px-44 desktop:pt-28 2xl:pt-36 largesceen:pb-6 bg-white-100"
     >
-      {/* <p className="text-gradient text-2xl sm:text-3xl lg:text-[2.375rem] desktop:text-[3.125rem] largesceen:text-[5rem]   flex  h-full leading-normal w-fit mb-10  sm:mb-16 lg:mb-20 p-3 largesceen:p-5 border-b">
-        +38 032 297 50 20
-      </p>
-
-      <p className="text-xs uppercase lg:text-base desktop:text-lg largesceen:text-[1.625rem] text-gradient  text-end  mr-[10%]">
-        8 Lystopadovoho <br /> Chynu,Lviv
-      </p> */}
+     
 
       <section className="py-8 sm:py-12 lg:py-20 desktop:py-32 largesceen:py-44 flex  justify-between relative w-full">
         <div className="">
@@ -68,8 +62,8 @@ const Footer = () => {
             Sanwariya Resort and Heritage
           </h2>
           <p className="text-[0.95rem] text-primary text-opacity-80 mb-4 max-w-xs">
-            A luxury heritage resort in Baran, Rajasthan, offering premium
-            rooms, banquet, pool, and fine dining. Experience tradition and
+            A luxury heritage resort in kapasan, Rajasthan, offering premium
+            rooms, conference hall, pool, and fine dining. Experience tradition and
             comfort in a serene setting.
           </p>
         </div>
@@ -85,7 +79,7 @@ const Footer = () => {
           <p className="mb-1 text-primary text-opacity-80">
             Phone:{" "}
             <a href="tel:+911234567890" className="hover:text-secondary">
-              +91 12345 67890
+              +91 7339935238
             </a>
           </p>
           <p className="mb-1 text-primary text-opacity-80">
@@ -94,7 +88,7 @@ const Footer = () => {
               href="mailto:info@sanwariyaresort.com"
               className="hover:text-secondary"
             >
-              info@sanwariyaresort.com
+              sanwariyaheritage@gmail.com
             </a>
           </p>
         </div>
@@ -110,7 +104,7 @@ const Footer = () => {
                 className="text-[#1B3B36] hover:text-secondary"
               />
             </a>
-            <a href="#" aria-label="Instagram">
+            <a href="https://www.instagram.com/sanwariya_heritage/" aria-label="Instagram">
               <FaInstagram
                 size={28}
                 className="text-[#1B3B36] hover:text-secondary"
