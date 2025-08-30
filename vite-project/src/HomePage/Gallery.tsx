@@ -1,6 +1,3 @@
-import React from "react";
-
-import label from "../../public/plabel.svg";
 import polygon from "../../public/Polygon 7.svg";
 import { InfiniteMovingCards } from "./infinite-moving-cards";
 

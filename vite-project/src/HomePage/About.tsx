@@ -1,12 +1,6 @@
 import "aos/dist/aos.css";
-
-// import vector14 from "../../public/about.png";
-// import image1 from "../../public/space-copenhagen-the-stratford-architonic-jw-25-12-arcit18 1.png";
-// import image2 from "../../public/space-copenhagen-the-stratford-architonic-jw-26-11-arcit18 1.png";
 import vector2 from "../../public/Vector 3.svg";
-import label from "../../public/labelHero.svg";
 import labela from "../../public/labela.svg";
-// import Reception from "../../public/Reception.jpg";
 const About = () => {
   return (
     <main

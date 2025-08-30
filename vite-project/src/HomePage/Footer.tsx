@@ -1,14 +1,8 @@
 "use client";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import AOS from "aos";
-import vector4 from "../../public/Vector 4.svg";
-import divider from "../../public/Rectangle 68.svg";
-
 import star8 from "../../public/Star 5.svg";
-// import Image1 from "../../public/jean-philippe-delberghe-T5BF4OyQLwU-unsplash 1.png";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
-import { IoIosSend } from "react-icons/io";
-import DateTimePicker from "./DateTimePicker";
 
 const date = new Date();
 

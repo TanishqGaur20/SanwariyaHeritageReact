@@ -1,10 +1,4 @@
-import React from "react";
-import labela from "../../public/labelr.svg";
 
-// import restaurant from "@/public/restaurant1.png";
-// import restaurant2 from "@/public/space-copenhagen-the-stratford-architonic-jw-5-17-arcit18 1.png";
-// import restaurant3 from "@/public/space-copenhagen-the-stratford-architonic-jw-17-19-arcit18 1.png";
-// import restaurant4 from "@/public/space-copenhagen-the-stratford-architonic-jw-2-06-arcit18 1.png";
 
 const RestaurantHero = () => {
   return (

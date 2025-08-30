@@ -6,9 +6,7 @@ const RoomHero = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
 
-  const togglePopup = () => {
-    setIsPopupVisible(!isPopupVisible);
-  };
+
 
   const handleClickOutside = (event: MouseEvent) => {
     if (popupRef.current && !popupRef.current.contains(event.target as Node)) {

@@ -3,20 +3,10 @@ import React, { useEffect, useState, useRef } from "react";
 import Swal from "sweetalert2";
 import "animate.css";
 import btn from "../../public/button - default.svg";
-import imgs from '../../public/HeroHome.jpg'
 import star8 from "../../public/Star 8.svg";
-import vector4 from "../../public/Vector 4.svg";
-import divider from "../../public/Rectangle 68.svg";
-// import hero from "../../public/space-copenhagen-the-stratford-architonic-rs-8-03-arcit18 1.png";
-import DateTimePicker from "./DateTimePicker";
-// import HeroHome from "../../public/HeroHome.jpg";
 const Hero = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
-
-  const togglePopup = () => {
-    setIsPopupVisible(!isPopupVisible);
-  };
 
   const handleClickOutside = (event: MouseEvent) => {
     if (popupRef.current && !popupRef.current.contains(event.target as Node)) {

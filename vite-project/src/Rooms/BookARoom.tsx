@@ -3,18 +3,13 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import React, { useEffect, useState, useRef } from "react";
 import Swal from "sweetalert2";
-// import bests from "@/public/roomHero.png";
-// import Image1 from "@/public/jean-philippe-delberghe-T5BF4OyQLwU-unsplash 1.png";
 
-// import best from "@/public/space-copenhagen-the-stratford-architonic-2-ed-reeve-24-arcit18 1.png";
 
 const BookARoom = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
 
-  const togglePopup = () => {
-    setIsPopupVisible(!isPopupVisible);
-  };
+
 
   const handleClickOutside = (event: MouseEvent) => {
     if (popupRef.current && !popupRef.current.contains(event.target as Node)) {

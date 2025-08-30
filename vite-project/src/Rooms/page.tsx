@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import AOS from 'aos';
 import Navbar from '../HomePage/Navbar';
 import RoomHero from './RoomHero';

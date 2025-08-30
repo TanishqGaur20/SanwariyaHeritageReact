@@ -2,20 +2,15 @@
 import React, { useEffect, useState, useRef } from "react";
 import AOS from "aos";
 
-// import room1 from "../../public/space-copenhagen-the-stratford-architonic-rs-10-28-arcit18 1.png";
-// import room2 from "../../public/space-copenhagen-the-stratford-architonic-rs-11-30-arcit18 1.png";
 import btn from "../../public/buttonroom.svg";
 import star8 from "../../public/Star 8.svg";
 import Swal from "sweetalert2";
-// import Room2 from "../../public/Room1.jpg";
 
 const Rooms = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
 
-  const togglePopup = () => {
-    setIsPopupVisible(!isPopupVisible);
-  };
+
 
   const handleClickOutside = (event: MouseEvent) => {
     if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
