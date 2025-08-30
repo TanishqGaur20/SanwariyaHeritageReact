@@ -1,98 +1,18 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import  { useEffect, useRef } from "react";
 import AOS from "aos";
 
 import btn from "../../public/buttonroom.svg";
 import star8 from "../../public/Star 8.svg";
-import Swal from "sweetalert2";
 
 const Rooms = () => {
-  const [isPopupVisible, setIsPopupVisible] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
 
 
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
-      setIsPopupVisible(false);
-    }
-  };
+  
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    Swal.fire({
-      title: "Submit your name and email",
-      html: `
-        <input id="swal-input1" class="swal2-input" placeholder="Name" />
-        <input id="swal-input2" class="swal2-input" placeholder="Email" />
-      `,
-      showCancelButton: true,
-      confirmButtonText: "Submit",
-      preConfirm: () => {
-        const name = (
-          document.getElementById("swal-input1") as HTMLInputElement
-        ).value;
-        const email = (
-          document.getElementById("swal-input2") as HTMLInputElement
-        ).value;
-        if (!name || !email) {
-          Swal.showValidationMessage(`Please enter both name and email`);
-          return false;
-        }
-        return { name: name, email: email };
-      },
-      allowOutsideClick: () => !Swal.isLoading(),
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const swalWithTailwindButtons = Swal.mixin({
-          customClass: {
-            confirmButton:
-              "bg-primary text-white font-bold py-2 px-4 rounded hover:bg-[#1B3B36] mr-2",
-            cancelButton:
-              "bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-700",
-          },
-          buttonsStyling: true,
-        });
-
-        swalWithTailwindButtons
-          .fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Yes, book it!",
-            cancelButtonText: "No, cancel!",
-            reverseButtons: true,
-          })
-          .then((confirmResult) => {
-            if (confirmResult.isConfirmed) {
-              swalWithTailwindButtons
-                .fire({
-                  title: "Room Booked Successfully!",
-                  text: `Your room has been booked. We look forward to welcoming you, ${result.value.name}.`,
-                  icon: "success",
-                })
-                .then(() => {
-                  setIsPopupVisible(false);
-                });
-            } else if (confirmResult.dismiss === Swal.DismissReason.cancel) {
-              swalWithTailwindButtons.fire({
-                title: "Cancelled",
-                text: "Your booking has been cancelled.",
-                icon: "error",
-              });
-            }
-          });
-      }
-    });
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  
 
   useEffect(() => {
     AOS.init({
@@ -194,7 +114,7 @@ const Rooms = () => {
             01 <span className="text-[#00000033] ">/ 04</span>
           </p>
 
-          <div className="absolute bottom-0 sm:-bottom-28 xl:bottom-0 right-0  w-48 h-48 small:m-5 label">
+          {/* <div className="absolute bottom-0 sm:-bottom-28 xl:bottom-0 right-0  w-48 h-48 small:m-5 label">
             <button
               type="button"
               onClick={handleSubmit}
@@ -211,7 +131,7 @@ const Rooms = () => {
                 Book room
               </span>
             </button>
-          </div>
+          </div> */}
         </div>
       </section>
     </main>

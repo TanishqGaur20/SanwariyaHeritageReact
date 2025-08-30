@@ -1,18 +1,12 @@
 
-import React, { useEffect, useState, useRef } from "react";
+import React, {useRef } from "react";
 import Swal from "sweetalert2";
 import "animate.css";
 import btn from "../../public/button - default.svg";
 import star8 from "../../public/Star 8.svg";
 const Hero = () => {
-  const [isPopupVisible, setIsPopupVisible] = useState(false);
-  const popupRef = useRef<HTMLDivElement>(null);
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
-      setIsPopupVisible(false);
-    }
-  };
+  
+ 
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -69,7 +63,7 @@ const Hero = () => {
                   icon: "success",
                 })
                 .then(() => {
-                  setIsPopupVisible(false);
+                  // Popup closed
                 });
             } else if (confirmResult.dismiss === Swal.DismissReason.cancel) {
               swalWithTailwindButtons.fire({
@@ -83,12 +77,8 @@ const Hero = () => {
     });
   };
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+ 
+
 
   return (
     <main className=" bg-primary mt-0 py-14 lg:pt-20  px-5 md:px-[1.9rem] largesceen:px-14 fourk:px-44">
